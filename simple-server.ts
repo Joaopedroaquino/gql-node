@@ -9,7 +9,14 @@ type Query {
 `
 
 const server = new ApolloServer({
-    typeDefs
+    typeDefs,
+    resolvers: {
+        Query: {
+            helloWorld: () => {
+                return 'Hello World'
+            }
+        }
+    }
 })
 
 server.listen().then(({url})=>{
