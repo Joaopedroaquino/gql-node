@@ -1,6 +1,12 @@
 import { ApolloServer, gql } from 'apollo-server';
+import { randomUUID } from 'node:crypto'
 
-const typeDefs = gql `
+const typeDefs = gql`
+type User {
+    id: String!
+    name: String!
+}
+
 type Query {
     users:[ String!]!
 }
@@ -11,7 +17,12 @@ type Mutation {
 }
 
 `
-const users: string[] = [];
+
+interface User {
+    id: string
+    name: string
+}
+const users: User[] = [];
 
 const server = new ApolloServer({
     typeDefs,
@@ -22,16 +33,20 @@ const server = new ApolloServer({
             }
         },
         Mutation: {
-           createUser: (parent, args, ctx) => {
-            console.log(args)
-            users.push(args.name)
+            createUser: (_, args) => {
+                const user = {
+                    id: randomUUID(),
+                    name: args.name
+                }
+                console.log(args)
+                users.push(user)
 
-            return args.name
-           } 
+                return user
+            }
         }
     }
 })
 
-server.listen().then(({url})=>{
+server.listen().then(({ url }) => {
     console.log(`Server running on ${url}`);
 })
