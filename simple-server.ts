@@ -5,6 +5,10 @@ type Query {
     helloWorld: String!
 }
 
+type Mutation {
+    createUser(name: String!): String!
+
+}
 
 `
 
