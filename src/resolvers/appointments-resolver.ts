@@ -1,4 +1,9 @@
-import { Resolver } from "type-graphql";
+import { Query, Resolver } from "type-graphql";
 
 @Resolver()
-export class AppointmentsResolver {}
+export class AppointmentsResolver {
+    @Query()
+    async helloWorld(){
+        return 'Hello World'
+    }
+}
