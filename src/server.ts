@@ -11,7 +11,9 @@ async function bootstrap(){
         ],
         emitSchemaFile: path.resolve(__dirname, 'schema.gql')
     })
-    const server = new ApolloServer({})
+    const server = new ApolloServer({
+        schema
+    })
 
     server.listen().then(({ url }) => {
         console.log(`Server running on ${url}`);
